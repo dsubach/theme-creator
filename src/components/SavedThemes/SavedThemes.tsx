@@ -1,40 +1,15 @@
 import React from 'react';
-import { Typography, makeStyles, Theme, createStyles, Grid, Divider } from '@material-ui/core';
-import DefaultThemes from './defaultThemes/DefaultThemes';
+import { Typography, Grid, Divider } from '@material-ui/core';
+import { DefaultThemes } from './defaultThemes/DefaultThemes';
 import { SavedThemeItem } from './savedThemeItem/SavedThemeItem';
 import { SavedThemeList } from './savedThemesList/SavedThemeList';
 import AddThemeButton from './addThemeButton/AddThemeButton';
 import { useAppSelector } from 'src/state/hooks';
+import { useStyles } from './SavedThemes.styles';
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    savedThemesRoot: {
-      paddingTop: theme.spacing(2),
-      paddingLeft: theme.spacing(2),
-    },
-    savedThemes: {
-      flex: 1,
-    },
-    divider: {
-      marginLeft: theme.spacing(2),
-      marginRight: theme.spacing(2),
-      [theme.breakpoints.down('md')]: {
-        display: 'none',
-      },
-    },
-    themeActions: {
-      display: 'flex',
-      flexDirection: 'column',
-      marginBottom: theme.spacing(2),
-      '& > *': {
-        marginTop: theme.spacing(),
-      },
-    },
-  }),
-);
-
-function SavedThemes() {
+export const SavedThemes = () => {
   const classes = useStyles();
+
   return (
     <div className={classes.savedThemesRoot}>
       <Grid container justify="center">
@@ -57,13 +32,11 @@ function SavedThemes() {
       </Grid>
     </div>
   );
-}
-
-export default SavedThemes;
+};
 
 export const currentThemeThumbnailId = 'current-theme-thumbnail';
 
-function CurrentTheme() {
+const CurrentTheme = () => {
   const themeOptions = useAppSelector((state) => state.themeOptions);
   const themeId = useAppSelector((state) => state.themeId);
   const themeName = useAppSelector((state) => state.savedThemes[state.themeId].name);
@@ -79,4 +52,4 @@ function CurrentTheme() {
       />
     </div>
   );
-}
+};

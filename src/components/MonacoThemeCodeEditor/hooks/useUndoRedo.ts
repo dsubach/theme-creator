@@ -5,7 +5,7 @@ import { verbose } from 'src/utils/utils';
 import { useAppDispatch } from 'src/state/hooks';
 import { updateVersionStates, useUpdateEditorState } from 'src/state/actions';
 
-export default function useUndoRedo(editorRef: EditorRefType) {
+export const useUndoRedo = (editorRef: EditorRefType) => {
   const updateEditorState = useUpdateEditorState();
 
   // handle initial configuration of undo/redo state properties
@@ -23,7 +23,7 @@ export default function useUndoRedo(editorRef: EditorRefType) {
 
   useTrackUndoRedoState(editorRef);
   return useUndoRedoHandlers(editorRef);
-}
+};
 
 const useTrackUndoRedoState = (editorRef: EditorRefType) => {
   const dispatch = useAppDispatch();

@@ -4,13 +4,13 @@ import { useAppSelector } from 'src/state/hooks';
 import { useStyles } from './TypographySampleArea.styles';
 import { ITypographySampleAreaProps } from './types';
 
-function TypographySampleArea({
+export const TypographySampleArea = ({
   variant,
   bgText,
   paperText,
   smallPreview,
   ...typographyProps
-}: ITypographySampleAreaProps) {
+}: ITypographySampleAreaProps) => {
   const classes = useStyles();
   const themeObject = useAppSelector((state) => state.themeObject);
   const typographyClassName = `${typographyProps.className} ${classes.text} ${
@@ -43,6 +43,4 @@ function TypographySampleArea({
       </Paper>
     </ThemeProvider>
   );
-}
-
-export default TypographySampleArea;
+};

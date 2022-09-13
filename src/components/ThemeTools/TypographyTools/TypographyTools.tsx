@@ -1,6 +1,6 @@
 import React from 'react';
-import TypographyGlobals from './typographyGlobals/TypographyGlobals';
-import TypographyVariant from './typographyVariant/TypographyVariant';
+import { TypographyGlobals } from './typographyGlobals/TypographyGlobals';
+import { TypographyVariant } from './typographyVariant/TypographyVariant';
 
 const typographyVariants = [
   { variant: 'h1', text: 'Head', smallPreview: true },

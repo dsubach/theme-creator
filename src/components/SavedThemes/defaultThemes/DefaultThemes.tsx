@@ -3,13 +3,13 @@ import { Button, ButtonBase, Grid, Popover, Typography } from '@material-ui/core
 import { useAppDispatch } from 'src/state/hooks';
 import { addNewDefaultTheme } from 'src/state/actions';
 import { NewSavedTheme } from 'src/state/types';
-import defaultThemes from '../savedThemesList/themesList';
+import defaultThemesList from '../savedThemesList/themesList';
 import { ThemeThumbnail } from '../themeThumbnail/ThemeThumbnail';
 import { useStyles } from './DefaultThemes.styles';
 
 export const defaultThemesId = 'default-themes';
 
-function DefaultThemes() {
+export const DefaultThemes = () => {
   const classes = useStyles();
   const dispatch = useAppDispatch();
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
@@ -23,7 +23,7 @@ function DefaultThemes() {
   };
 
   const handleClickTheme = useCallback(
-    (newTheme: NewSavedTheme) => {
+    (newTheme: Omit<NewSavedTheme, 'lastUpdated'>) => {
       dispatch(addNewDefaultTheme(newTheme));
     },
     [dispatch],
@@ -53,7 +53,7 @@ function DefaultThemes() {
         classes={{ paper: classes.templatePopover }}
       >
         <Grid container spacing={2} wrap="nowrap" className={classes.templateContainer}>
-          {defaultThemes.map((t) => (
+          {defaultThemesList.map((t) => (
             <Grid item key={t.name} onClick={() => handleClickTheme(t)}>
               <ButtonBase className={classes.buttonRoot}>
                 <div className={classes.thumbnailContainer}>
@@ -71,6 +71,4 @@ function DefaultThemes() {
       </Popover>
     </>
   );
-}
-
-export default DefaultThemes;
+};

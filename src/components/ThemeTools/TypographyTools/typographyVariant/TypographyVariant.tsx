@@ -7,7 +7,7 @@ import {
   TypographyTypeMap,
 } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import TypographySampleArea from '../typographySampleArea/TypographySampleArea';
+import { TypographySampleArea } from '../typographySampleArea/TypographySampleArea';
 import { TypographyInput } from '../typographyInput/TypographyInput';
 import { useStyles } from './TypographyVariant.styles';
 import { ITypographyVariantProps } from './types';
@@ -20,7 +20,11 @@ const defaultVariantProperties = [
   'letterSpacing',
 ];
 
-function TypographyVariant({ variant, text, smallPreview = false }: ITypographyVariantProps) {
+export const TypographyVariant = ({
+  variant,
+  text,
+  smallPreview = false,
+}: ITypographyVariantProps) => {
   const classes = useStyles();
   const [expanded, setExpanded] = useState(false);
 
@@ -50,6 +54,4 @@ function TypographyVariant({ variant, text, smallPreview = false }: ITypographyV
       </AccordionDetails>
     </Accordion>
   );
-}
-
-export default TypographyVariant;
+};

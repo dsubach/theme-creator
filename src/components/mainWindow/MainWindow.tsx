@@ -1,12 +1,12 @@
 import React, { useCallback } from 'react';
-import ThemeWrapper from 'src/components/themeWrapper/ThemeWrapper';
 import { AppBar, Tabs, Tab, IconButton, Hidden } from '@material-ui/core';
 import { MuiComponentSamples } from 'src/components/MuiComponentSamples/MuiComponentSamples';
-import SavedThemes from 'src/components/SavedThemes/SavedThemes';
-import { setTab, toggleComponentNav, toggleThemeConfig } from 'src/state/reducers';
+import { SavedThemes } from 'src/components/SavedThemes/SavedThemes';
+import { ThemeWrapper } from 'src/components/themeWrapper/ThemeWrapper';
 import MaterialUiIcon from 'mdi-material-ui/MaterialUi';
 import BrushIcon from '@material-ui/icons/Brush';
 import { useAppDispatch, useAppSelector } from 'src/state/hooks';
+import { setTab, toggleComponentNav, toggleThemeConfig } from 'src/state/reducers';
 import { useStyles } from './MainWindow.styles';
 
 export const componentsTabId = 'components-tab';

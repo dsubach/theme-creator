@@ -1,18 +1,16 @@
 import React from 'react';
-import { ThemeProvider, makeStyles } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { useAppSelector } from 'src/state/hooks';
-
-interface ThemeWrapperProps {
-  children: React.ReactNode | React.ReactNodeArray;
-}
+import { useStyles } from './ThemeWrapper.styles';
+import { IThemeWrapperProps } from './types';
 
 /**
  *
  * Wraps example content in the dynamically controlled theme
  * set by the theme editor sidebar
  */
-const ThemeWrapper = ({ children }: ThemeWrapperProps) => {
+export const ThemeWrapper = ({ children }: IThemeWrapperProps) => {
   const themeObject = useAppSelector((state) => state.themeObject);
 
   return (
@@ -22,19 +20,6 @@ const ThemeWrapper = ({ children }: ThemeWrapperProps) => {
   );
 };
 
-const useStyles = makeStyles((theme) => ({
-  themeContainer: {
-    backgroundColor: theme.palette.background.default,
-    width: '100%',
-    height: '100%',
-  },
-}));
-
-/**
- *
- * CssBa
- *
- */
 const ThemeContainer = ({ children }: ThemeWrapperProps) => {
   const classes = useStyles();
   return (
@@ -43,5 +28,3 @@ const ThemeContainer = ({ children }: ThemeWrapperProps) => {
     </Paper>
   );
 };
-
-export default ThemeWrapper;

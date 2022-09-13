@@ -1,14 +1,12 @@
 import React, { useCallback, MouseEvent } from 'react';
 import moment from 'moment';
-
-import { Button, Card, Typography } from '@material-ui/core';
 import SwapHorizIcon from '@material-ui/icons/SwapHoriz';
-
+import { Button, Card, Typography } from '@material-ui/core';
 import { loadSavedTheme } from 'src/state/actions';
 import { useAppDispatch, useAppSelector } from 'src/state/hooks';
 import { ThemeThumbnail } from '../themeThumbnail/ThemeThumbnail';
 import { DeleteThemeButton } from '../deteleThemeButton/DeleteThemeButton';
-import RenameThemeButton from '../renameThemeButton/RenameThemeButton';
+import { RenameThemeButton } from '../renameThemeButton/RenameThemeButton';
 import { ISavedThemeItemProps } from './types';
 import { useStyles } from './SavedThemeItem.styles';
 

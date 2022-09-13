@@ -5,11 +5,11 @@ import { ThemeValueChangeEvent } from 'src/components/ThemeTools/events';
 import { useUpdateEditorState } from 'src/state/actions';
 import { useAppSelector } from 'src/state/hooks';
 
-export default function useEditorStateSync(editorRef: EditorRefType) {
+export const useEditorStateSync = (editorRef: EditorRefType) => {
   useSyncToStore(editorRef);
   useSyncFromStore(editorRef);
   useListenForThemeChangeEvent(editorRef);
-}
+};
 /**
  * ensure that when the code editor is updated,
  * the redux store themeInput is also updated

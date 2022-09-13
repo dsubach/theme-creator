@@ -49,7 +49,7 @@ async function formatInput(editorRef: EditorRefType) {
  * @param editorRef
  * @returns Function that handles saving code editor contents
  */
-export default function useSave(editorRef: EditorRefType) {
+export const useSave = (editorRef: EditorRefType) => {
   const formatOnSave = useAppSelector((state) => state.editor.formatOnSave);
   const updateEditorState = useUpdateEditorState();
   const dispatch = useAppDispatch();
@@ -92,7 +92,7 @@ export default function useSave(editorRef: EditorRefType) {
   useSaveKey(editorRef, handleSave);
 
   return handleSave;
-}
+};
 
 /**
  * Add an event listener for the Ctrl + S key combo that saves the editor contents

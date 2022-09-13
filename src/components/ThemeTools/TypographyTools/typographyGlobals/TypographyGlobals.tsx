@@ -1,7 +1,7 @@
 import React from 'react';
 import { Accordion, AccordionSummary, AccordionDetails, Divider } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import TypographySampleArea from '../typographySampleArea/TypographySampleArea';
+import { TypographySampleArea } from '../typographySampleArea/TypographySampleArea';
 import { TypographyInput } from '../typographyInput/TypographyInput';
 import { useStyles } from './TypographyGlobals.styles';
 
@@ -15,7 +15,7 @@ const defaultGlobalProperties = [
   'htmlFontSize',
 ];
 
-function TypographyGlobals() {
+export const TypographyGlobals = () => {
   const classes = useStyles();
   return (
     <Accordion>
@@ -36,6 +36,4 @@ function TypographyGlobals() {
       </AccordionDetails>
     </Accordion>
   );
-}
-
-export default TypographyGlobals;
+};

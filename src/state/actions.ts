@@ -90,7 +90,8 @@ export const addNewSavedTheme = (name: string) =>
     lastUpdated: new Date().toISOString(),
   });
 
-export const addNewDefaultTheme = (newSavedTheme: NewSavedTheme) => addNewTheme(newSavedTheme);
+export const addNewDefaultTheme = (newSavedTheme: Omit<NewSavedTheme, 'lastUpdated'>) =>
+  addNewTheme({ ...newSavedTheme, lastUpdated: new Date().toISOString() });
 /**
  * Switch to a new theme by ID
  */
@@ -117,7 +118,7 @@ export const removeSavedTheme =
  * when the fonts load, or fail to load
  * @param fonts
  */
-export async function loadFonts(fonts: string[]) {
+export const loadFonts = async (fonts: string[]) => {
   return await new Promise<boolean>((resolve) => {
     // require inline to support server side rendering
     try {
@@ -139,7 +140,7 @@ export async function loadFonts(fonts: string[]) {
       resolve(false);
     }
   });
-}
+};
 
 /**
  * Save the code coming from the monaco-editor

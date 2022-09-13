@@ -18,7 +18,7 @@ const readOnlyLines = {
  * also attempts to restrict closing the themeOptions object
  * @param editorRef
  */
-export default function useReadOnlyLines(editorRef: EditorRefType) {
+export const useReadOnlyLines = (editorRef: EditorRefType) => {
   // apply read only styles
   useReadOnlyStyles(editorRef);
 
@@ -27,7 +27,7 @@ export default function useReadOnlyLines(editorRef: EditorRefType) {
      * prevent pasting, cutting, or key event that cause edits
      * on read only lines
      */
-    function preventModifyReadOnlyLines(event: monaco.IKeyboardEvent) {
+    const preventModifyReadOnlyLines = (event: monaco.IKeyboardEvent) => {
       console.log(editorRef.current?.getModel()?.getLineCount());
       const selection = editorRef.current?.getSelection();
       const lastEditableLine =
@@ -60,12 +60,12 @@ export default function useReadOnlyLines(editorRef: EditorRefType) {
           event.stopPropagation();
         }
       }
-    }
+    };
 
     /**
      * Prevent backspace on column 1 of the first editable line
      */
-    function preventBackspaceToReadOnlyLines(event: monaco.IKeyboardEvent) {
+    const preventBackspaceToReadOnlyLines = (event: monaco.IKeyboardEvent) => {
       if (event.keyCode === monaco.KeyCode.Backspace) {
         const selection = editorRef.current?.getSelection();
 
@@ -78,12 +78,12 @@ export default function useReadOnlyLines(editorRef: EditorRefType) {
           }
         }
       }
-    }
+    };
 
     /**
      * Prevent delete key on last column of last editable line
      */
-    function preventDeleteToReadOnlyLines(event: monaco.IKeyboardEvent) {
+    const preventDeleteToReadOnlyLines = (event: monaco.IKeyboardEvent) => {
       if (event.keyCode === monaco.KeyCode.Delete) {
         const selection = editorRef.current?.getSelection();
         const lastEditableLine =
@@ -100,7 +100,7 @@ export default function useReadOnlyLines(editorRef: EditorRefType) {
           }
         }
       }
-    }
+    };
 
     const keyDownBinding = editorRef.current?.onKeyDown((event: monaco.IKeyboardEvent) => {
       preventModifyReadOnlyLines(event);
@@ -110,7 +110,7 @@ export default function useReadOnlyLines(editorRef: EditorRefType) {
 
     return () => keyDownBinding?.dispose();
   }, []);
-}
+};
 
 /**
  * Add styles and hover messages to read only lines, and create

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, FormEvent, MouseEvent } from 'react';
+import React, { useCallback, useState, FormEvent, FocusEvent, MouseEvent, useRef } from 'react';
 import Button from '@material-ui/core/Button/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -10,7 +10,8 @@ import { useAppDispatch } from 'src/state/hooks';
 import { renameTheme } from 'src/state/reducers';
 import { IRenameThemeButtonProps } from './types';
 
-const RenameThemeButton = ({ themeId, defaultName }: IRenameThemeButtonProps) => {
+export const RenameThemeButton = ({ themeId, defaultName }: IRenameThemeButtonProps) => {
+  const inputRef = useRef<HTMLInputElement>();
   const dispatch = useAppDispatch();
   const [open, setOpen] = useState(false);
 
@@ -23,12 +24,14 @@ const RenameThemeButton = ({ themeId, defaultName }: IRenameThemeButtonProps) =>
     setOpen(false);
   };
 
-  const handleFocus = (event: React.FocusEvent<HTMLInputElement>): void => event.target.select();
+  const handleFocus = (event: FocusEvent<HTMLInputElement>): void => event.target.select();
 
   const handleSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      dispatch(renameTheme({ themeId, name: event.target.themeName.value }));
+      const inputValue = inputRef.current?.value ?? '';
+
+      dispatch(renameTheme({ themeId, name: inputValue }));
     },
     [dispatch],
   );
@@ -49,6 +52,7 @@ const RenameThemeButton = ({ themeId, defaultName }: IRenameThemeButtonProps) =>
           <DialogTitle id="rename-theme-dialog">Rename Theme</DialogTitle>
           <DialogContent>
             <TextField
+              inputRef={inputRef}
               autoFocus
               onFocus={handleFocus}
               defaultValue={defaultName}
@@ -72,5 +76,3 @@ const RenameThemeButton = ({ themeId, defaultName }: IRenameThemeButtonProps) =>
     </>
   );
 };
-
-export default RenameThemeButton;

@@ -61,22 +61,22 @@ export const generateThemeId = (savedThemes: IThemeEditor['savedThemes']) => {
  * @param a Set to compare
  * @param b Set to compare
  */
-export function isSetEq(a: Set<any>, b: Set<any>) {
+export const isSetEq = (a: Set<any>, b: Set<any>) => {
   if (a.size !== b.size) return false;
   for (const x of a) if (!b.has(x)) return false;
 
   return true;
-}
+};
 
 /**
  * Logs to console if in development mode
  * @param args parameters passed to `console.log`
  */
-export function verbose(...args: any[]) {
+export const verbose = (...args: any[]) => {
   if (process.env.NODE_ENV === 'development') {
     console.log(...args);
   }
-}
+};
 
 export const stringify = (themeOptions: ThemeOptions) => {
   return `import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';

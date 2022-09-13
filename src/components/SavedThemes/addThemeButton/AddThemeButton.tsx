@@ -1,4 +1,4 @@
-import React, { useCallback, FormEvent } from 'react';
+import React, { useState, useRef, useCallback, FormEvent, FocusEvent } from 'react';
 import Button from '@material-ui/core/Button/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -12,7 +12,8 @@ export const addThemeButtonId = 'add-theme-button';
 
 const AddThemeButton = () => {
   const dispatch = useAppDispatch();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const inputRef = useRef<HTMLInputElement>();
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -22,12 +23,14 @@ const AddThemeButton = () => {
     setOpen(false);
   };
 
-  const handleFocus = (event) => event.target.select();
+  const handleFocus = (event: FocusEvent<HTMLInputElement>) => event.target.select();
 
   const handleSubmit = useCallback(
     (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
-      dispatch(addNewSavedTheme(event.target.themeName.value));
+      const inputValue = inputRef.current?.value ?? '';
+
+      dispatch(addNewSavedTheme(inputValue));
       handleClose();
     },
     [dispatch],
@@ -44,6 +47,7 @@ const AddThemeButton = () => {
           <DialogTitle id="add-theme-dialog">Add New Theme</DialogTitle>
           <DialogContent>
             <TextField
+              inputRef={inputRef}
               autoFocus
               onFocus={handleFocus}
               defaultValue="New Theme"

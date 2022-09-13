@@ -28,7 +28,7 @@ const languageCompilerOptions: monaco.languages.typescript.CompilerOptions = {
   suppressExcessPropertyErrors: true,
 };
 
-export default function useEditor(editorRef: MutableEditorRefType) {
+export const useEditor = (editorRef: MutableEditorRefType) => {
   const themeInput = useAppSelector((state) => state.editor.themeInput);
   useEffect(() => {
     // set the editor theme
@@ -57,7 +57,7 @@ export default function useEditor(editorRef: MutableEditorRefType) {
   }, []);
 
   useEditorResizeListener(editorRef);
-}
+};
 
 const setLanguageDiagnosticOptions = () => {
   monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions(languageDiagnosticsOptions);
