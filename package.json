@@ -66,6 +66,7 @@
     "@types/loadable__component": "^5.13.4",
     "@types/prettier": "^2.7.0",
     "@types/react-color": "^3.0.6",
+    "@types/react-redux": "^7.1.24",
     "@types/uuid": "^8.3.4",
     "@types/webfontloader": "^1.6.34",
     "@typescript-eslint/eslint-plugin": "^5.36.2",
