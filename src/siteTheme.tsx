@@ -1,4 +1,5 @@
-import { createMuiTheme, ThemeOptions, Theme, PaletteType } from '@material-ui/core';
+import { ThemeOptions, Theme, PaletteType } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles';
 
 export const defaultThemeOptions: ThemeOptions = {
   palette: {
@@ -12,7 +13,7 @@ export const defaultThemeOptions: ThemeOptions = {
   },
 };
 
-export const defaultTheme: Theme = createMuiTheme();
+export const defaultTheme: Theme = createTheme();
 
 export const themeConfig: ThemeOptions = {
   palette: {
@@ -89,4 +90,4 @@ export const themeConfig: ThemeOptions = {
   },
 };
 
-export default createMuiTheme(themeConfig);
+export default createTheme(themeConfig);

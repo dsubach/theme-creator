@@ -1,6 +1,7 @@
 import { NewSavedTheme, IPersistedState, EditorStateOptions } from './types';
 import { IThemeEditor } from 'src/state/types';
-import { createMuiTheme, ThemeOptions } from '@material-ui/core';
+import { ThemeOptions } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles';
 import {
   createPreviewMuiTheme,
   generateThemeId,
@@ -13,7 +14,14 @@ import { loadFonts } from './actions';
 
 import { defaultThemeOptions } from 'src/siteTheme';
 
-import { createAction, createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import {
+  createAction,
+  createAsyncThunk,
+  createSlice,
+  PayloadAction,
+  Slice,
+  SliceCaseReducers,
+} from '@reduxjs/toolkit';
 import { v4 as uuidv4 } from 'uuid';
 import { REHYDRATE } from 'redux-persist';
 
@@ -25,8 +33,8 @@ const initialFonts = ['Droid Sans', 'Droid Serif', 'Open Sans', 'Roboto'];
 
 const initialState: IThemeEditor = {
   themeId: defaultThemeId,
-  themeOptions: defaultThemeOptions, // the object loaded into createMuiTheme
-  themeObject: createMuiTheme(defaultThemeOptions),
+  themeOptions: defaultThemeOptions, // the object loaded into createTheme
+  themeObject: createTheme(defaultThemeOptions),
   savedThemes: {
     [defaultThemeId]: {
       id: defaultThemeId,
@@ -65,7 +73,7 @@ export const addFonts = createAsyncThunk('appSlice/addFonts', async (fonts: stri
 
 const restoreState = createAction<IPersistedState>(REHYDRATE);
 
-const appSlice = createSlice({
+const appSlice: Slice<IThemeEditor, SliceCaseReducers<IThemeEditor>, string> = createSlice({
   name: 'appSlice',
   initialState,
   reducers: {

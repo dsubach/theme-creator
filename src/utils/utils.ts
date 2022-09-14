@@ -1,6 +1,8 @@
 import JSON5 from 'json5';
 import deepmerge from 'deepmerge';
-import { createMuiTheme, ThemeOptions } from '@material-ui/core';
+import { Draft } from '@reduxjs/toolkit';
+import { ThemeOptions, Theme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles';
 import { TypographyOptions } from '@material-ui/core/styles/createTypography';
 import { BreakpointValues } from '@material-ui/core/styles/createBreakpoints';
 import dotProp from 'dot-prop-immutable';
@@ -18,7 +20,7 @@ import { loadFonts } from '../state/actions';
 export const getByPath = (object: object | null, path: string, defaultValue?: any) =>
   path.split('.').reduce((o: any, p) => (o ? o[p] : defaultValue), object) || defaultValue;
 
-export const removeByPath = (object: any, path: any) => {
+export const removeByPath = (object: any, path: any): Partial<any> => {
   const prunedObject = dotProp.delete(object, path);
   const pathArray = path.split('.');
   if (pathArray.length > 1) {
@@ -79,7 +81,7 @@ export function verbose(...args: any[]) {
 }
 
 export const stringify = (themeOptions: ThemeOptions) => {
-  return `import { ThemeOptions } from '@material-ui/core/styles/createMuiTheme';
+  return `import { ThemeOptions } from '@material-ui/core';
   
   export const themeOptions: ThemeOptions = ${JSON5.stringify(themeOptions, null, 2)};`;
 };
@@ -135,7 +137,7 @@ export const getFontsFromThemeOptions = (
   return [...fontSet];
 };
 
-export const onRemoveSavedTheme = (state: IThemeEditor, themeId: string) => {
+export const onRemoveSavedTheme = (state: IThemeEditor | Draft<IThemeEditor>, themeId: string) => {
   const newSavedThemes = { ...state.savedThemes };
   delete newSavedThemes[themeId];
   return { savedThemes: newSavedThemes };
@@ -151,7 +153,10 @@ export const loadFontsIfRequired = (fonts: string[], loadedFonts: Set<string>) =
   return new Set([...loadedFonts, ...fontsToLoad].sort());
 };
 
-export const createPreviewMuiTheme = (themeOptions: ThemeOptions, previewSize: PreviewSize) => {
+export const createPreviewMuiTheme = (
+  themeOptions: ThemeOptions,
+  previewSize: PreviewSize,
+): Theme => {
   const spoofedBreakpoints: Record<string, BreakpointValues> = {
     xs: { xs: 0, sm: 10000, md: 10001, lg: 10002, xl: 10003 },
     sm: { xs: 0, sm: 1, md: 10001, lg: 10002, xl: 10003 },
@@ -160,9 +165,9 @@ export const createPreviewMuiTheme = (themeOptions: ThemeOptions, previewSize: P
     xl: { xs: 0, sm: 1, md: 2, lg: 3, xl: 4 },
   };
 
-  if (!previewSize) return createMuiTheme(themeOptions);
+  if (!previewSize) return createTheme(themeOptions);
 
-  return createMuiTheme(
+  return createTheme(
     deepmerge({ breakpoints: { values: spoofedBreakpoints[previewSize] } }, themeOptions),
   );
 };
