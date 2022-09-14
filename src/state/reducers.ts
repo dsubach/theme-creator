@@ -94,47 +94,68 @@ const appSlice: Slice<IThemeEditor, SliceCaseReducers<IThemeEditor>, string> = c
     },
     addNewTheme(state, action: PayloadAction<NewSavedTheme>) {
       const newThemeId = uuidv4();
+      const newThemeObject = createPreviewMuiTheme(action.payload.themeOptions, state.previewSize);
+      const newThemeOptions = action.payload.themeOptions;
+      const newSavedThemes = {
+        [newThemeId]: {
+          ...action.payload,
+          id: newThemeId,
+          lastUpdated: new Date().toISOString(),
+        },
+      };
 
       return {
         ...state,
         editor: { ...state.editor, themeInput: stringify(action.payload.themeOptions) },
         themeId: newThemeId,
-        themeOptions: action.payload.themeOptions,
-        themeObject: createPreviewMuiTheme(action.payload.themeOptions, state.previewSize),
-        savedThemes: {
-          ...state.savedThemes,
-          [newThemeId]: {
-            id: newThemeId,
-            ...action.payload,
-            lastUpdated: new Date().toISOString(),
-          },
+        themeOptions: {
+          ...state.themeOptions,
+          newThemeOptions,
         },
+        themeObject: {
+          ...state.themeObject,
+          newThemeObject,
+        },
+        savedThemes: Object.assign(state.savedThemes, newSavedThemes),
         loadedFonts: loadFontsIfRequired(action.payload.fonts, state.loadedFonts),
       };
     },
     updateTheme(state, action: PayloadAction<ThemeOptions>) {
+      const newThemeObject = createPreviewMuiTheme(action.payload, state.previewSize);
+      const newThemeOptions = action.payload;
+      const newSavedThemes = {
+        [state.themeId]: {
+          ...state.savedThemes[state.themeId],
+          themeOptions: action.payload,
+          fonts: getFontsFromThemeOptions(
+            action.payload,
+            state.savedThemes[state.themeId]?.fonts,
+            state.loadedFonts,
+          ),
+          lastUpdated: new Date().toISOString(),
+        },
+      };
+
       return {
         ...state,
-        themeOptions: action.payload,
-        themeObject: createPreviewMuiTheme(action.payload, state.previewSize),
-        editor: { ...state.editor, themeInput: stringify(action.payload) },
-
-        savedThemes: {
-          ...state.savedThemes,
-          [state.themeId]: {
-            ...state.savedThemes[state.themeId],
-            themeOptions: action.payload,
-            fonts: getFontsFromThemeOptions(
-              action.payload,
-              state.savedThemes[state.themeId]?.fonts,
-              state.loadedFonts,
-            ),
-            lastUpdated: new Date().toISOString(),
-          },
+        themeOptions: {
+          ...state.themeOptions,
+          newThemeOptions,
         },
+        themeObject: {
+          ...state.themeObject,
+          newThemeObject,
+        },
+        editor: { ...state.editor, themeInput: stringify(action.payload) },
+        savedThemes: Object.assign(state.savedThemes, newSavedThemes),
       };
     },
     loadTheme(state, action: PayloadAction<string>) {
+      const newThemeObject = createPreviewMuiTheme(
+        state.savedThemes[action.payload].themeOptions as ThemeOptions,
+        state.previewSize,
+      );
+
       return {
         ...state,
         editor: {
@@ -144,10 +165,10 @@ const appSlice: Slice<IThemeEditor, SliceCaseReducers<IThemeEditor>, string> = c
 
         themeId: action.payload,
         themeOptions: state.savedThemes[action.payload].themeOptions,
-        themeObject: createPreviewMuiTheme(
-          state.savedThemes[action.payload].themeOptions as ThemeOptions,
-          state.previewSize,
-        ),
+        themeObject: {
+          ...state.themeObject,
+          newThemeObject,
+        },
         loadedFonts: loadFontsIfRequired(
           state.savedThemes[action.payload].fonts,
           state.loadedFonts,
@@ -156,9 +177,11 @@ const appSlice: Slice<IThemeEditor, SliceCaseReducers<IThemeEditor>, string> = c
     },
 
     removeTheme(state, action: PayloadAction<string>) {
+      const newSavedThemes = onRemoveSavedTheme(state, action.payload);
+
       return {
         ...state,
-        ...onRemoveSavedTheme(state, action.payload),
+        savedThemes: Object.assign(state.savedThemes, newSavedThemes.savedThemes),
       };
     },
     renameTheme(state, action: PayloadAction<{ themeId: string; name: string }>) {
@@ -179,9 +202,17 @@ const appSlice: Slice<IThemeEditor, SliceCaseReducers<IThemeEditor>, string> = c
     }),
       builder.addCase(restoreState, (state, action: PayloadAction<IPersistedState | null>) => {
         if (action.payload) {
+          const newThemeObject = createPreviewMuiTheme(
+            action.payload.themeOptions,
+            state.previewSize,
+          );
+
           return {
             ...state,
-            themeObject: createPreviewMuiTheme(action.payload.themeOptions, state.previewSize),
+            themeObject: {
+              ...state.themeObject,
+              newThemeObject,
+            },
             loadedFonts: loadFontsIfRequired(
               action.payload.savedThemes[action.payload.themeId].fonts,
               state.loadedFonts,
