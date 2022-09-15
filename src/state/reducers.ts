@@ -1,13 +1,10 @@
-import { NewSavedTheme, IPersistedState, EditorStateOptions } from './types';
+import { IPersistedState, EditorStateOptions } from './types';
 import { IThemeEditor } from 'src/state/types';
-import { ThemeOptions } from '@material-ui/core';
 import { createTheme } from '@material-ui/core/styles';
 import {
   createPreviewMuiTheme,
   generateThemeId,
-  getFontsFromThemeOptions,
   loadFontsIfRequired,
-  onRemoveSavedTheme,
   stringify,
 } from 'src/utils/utils';
 import { loadFonts } from './actions';
@@ -22,7 +19,6 @@ import {
   Slice,
   SliceCaseReducers,
 } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
 import { REHYDRATE } from 'redux-persist';
 
 import { enableMapSet } from 'immer';
@@ -92,73 +88,22 @@ const appSlice: Slice<IThemeEditor, SliceCaseReducers<IThemeEditor>, string> = c
     setTab(state, action: PayloadAction<string>) {
       state.activeTab = action.payload;
     },
-    addNewTheme(state, action: PayloadAction<NewSavedTheme>) {
-      const newThemeId = uuidv4();
-
-      return {
-        ...state,
-        editor: { ...state.editor, themeInput: stringify(action.payload.themeOptions) },
-        themeId: newThemeId,
-        themeOptions: action.payload.themeOptions,
-        themeObject: createPreviewMuiTheme(action.payload.themeOptions, state.previewSize),
-        savedThemes: {
-          ...state.savedThemes,
-          [newThemeId]: {
-            id: newThemeId,
-            ...action.payload,
-            lastUpdated: new Date().toISOString(),
-          },
-        },
-        loadedFonts: loadFontsIfRequired(action.payload.fonts, state.loadedFonts),
-      };
+    addNewTheme(state, action: PayloadAction<IThemeEditor>) {
+      return action.payload;
     },
-    updateTheme(state, action: PayloadAction<ThemeOptions>) {
-      return {
-        ...state,
-        themeOptions: action.payload,
-        themeObject: createPreviewMuiTheme(action.payload, state.previewSize),
-        editor: { ...state.editor, themeInput: stringify(action.payload) },
-
-        savedThemes: {
-          ...state.savedThemes,
-          [state.themeId]: {
-            ...state.savedThemes[state.themeId],
-            themeOptions: action.payload,
-            fonts: getFontsFromThemeOptions(
-              action.payload,
-              state.savedThemes[state.themeId]?.fonts,
-              state.loadedFonts,
-            ),
-            lastUpdated: new Date().toISOString(),
-          },
-        },
-      };
+    updateTheme(_, action: PayloadAction<IThemeEditor>) {
+      return action.payload;
     },
-    loadTheme(state, action: PayloadAction<string>) {
-      return {
-        ...state,
-        editor: {
-          ...state.editor,
-          themeInput: stringify(state.savedThemes[action.payload].themeOptions as ThemeOptions),
-        },
-
-        themeId: action.payload,
-        themeOptions: state.savedThemes[action.payload].themeOptions,
-        themeObject: createPreviewMuiTheme(
-          state.savedThemes[action.payload].themeOptions as ThemeOptions,
-          state.previewSize,
-        ),
-        loadedFonts: loadFontsIfRequired(
-          state.savedThemes[action.payload].fonts,
-          state.loadedFonts,
-        ),
-      };
+    loadTheme(_, action: PayloadAction<IThemeEditor>) {
+      return action.payload;
     },
 
     removeTheme(state, action: PayloadAction<string>) {
+      const newSavedThemes = { ...state.savedThemes };
+      delete newSavedThemes[action.payload];
       return {
         ...state,
-        ...onRemoveSavedTheme(state, action.payload),
+        savedThemes: newSavedThemes,
       };
     },
     renameTheme(state, action: PayloadAction<{ themeId: string; name: string }>) {
@@ -179,9 +124,14 @@ const appSlice: Slice<IThemeEditor, SliceCaseReducers<IThemeEditor>, string> = c
     }),
       builder.addCase(restoreState, (state, action: PayloadAction<IPersistedState | null>) => {
         if (action.payload) {
+          const newThemeObject = createPreviewMuiTheme(
+            action.payload.themeOptions,
+            state.previewSize,
+          );
           return {
             ...state,
-            themeObject: createPreviewMuiTheme(action.payload.themeOptions, state.previewSize),
+            themeObject: { ...newThemeObject },
+            // themeObject: newThemeObject,
             loadedFonts: loadFontsIfRequired(
               action.payload.savedThemes[action.payload.themeId].fonts,
               state.loadedFonts,
@@ -190,19 +140,6 @@ const appSlice: Slice<IThemeEditor, SliceCaseReducers<IThemeEditor>, string> = c
         }
         return state;
       });
-    // builder.addCase('persist/REHYDRATE', (state, action: PayloadAction<IPersistedState>) => {
-    //   if (action.payload != null) {
-    //     return {
-    //       ...state,
-    //       themeObject: createPreviewMuiTheme(action.payload.themeOptions, state.previewSize),
-    //       loadedFonts: loadFontsIfRequired(
-    //         action.payload.savedThemes[action.payload.themeId].fonts,
-    //         state.loadedFonts,
-    //       ),
-    //     };
-    //   }
-    //   return state;
-    // });
   },
 });
 
@@ -211,7 +148,6 @@ export const {
   loadTheme,
   removeTheme,
   renameTheme,
-  renameTheme1,
   resetSiteData,
   setTab,
   showWarningScreen,

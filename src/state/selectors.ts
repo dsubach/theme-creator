@@ -21,7 +21,7 @@ const getThemeValueInfo = (path: string, themeOptions: ThemeOptions, themeObject
 
 const makeThemeValueInfoSelector = () =>
   createSelector(
-    (_, path: string) => path,
+    (_: any, path: string) => path,
     (state: IThemeEditor) => state.themeOptions,
     (state: IThemeEditor) => state.themeObject,
     getThemeValueInfo,
