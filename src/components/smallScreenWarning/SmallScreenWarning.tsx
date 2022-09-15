@@ -20,7 +20,7 @@ export const SmallScreenWarning = () => {
   const dispatch = useAppDispatch();
 
   const handleClose = () => {
-    dispatch(showWarningScreen());
+    dispatch(showWarningScreen(null));
   };
 
   useEffect(() => {

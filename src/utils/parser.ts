@@ -30,7 +30,7 @@ export const parseEditorOutput = (code: string) => {
   const trimmedCode = trimCode(code);
   try {
     return JSON5.parse(trimmedCode);
-  } catch (error) {
+  } catch (error: any) {
     verbose('Error while parsing theme string', error.message);
     throw error;
   }

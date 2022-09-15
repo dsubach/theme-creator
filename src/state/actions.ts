@@ -122,6 +122,7 @@ export const loadFonts = async (fonts: string[]) => {
   return await new Promise<boolean>((resolve) => {
     // require inline to support server side rendering
     try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const WebFont = require('webfontloader');
       WebFont.load({
         google: {
@@ -152,7 +153,7 @@ export const saveEditorToTheme = (code: string) => {
   let themeOptions;
   try {
     themeOptions = parseEditorOutput(code);
-  } catch (err) {
+  } catch (err: any) {
     // dispatch errors to redux store
     return updateEditorState({
       errors: [
