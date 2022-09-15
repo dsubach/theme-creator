@@ -1,5 +1,5 @@
 import JSON5 from 'json5';
-import { verbose } from 'src/utils/utils';
+import { verbose, getErrorMessage } from 'src/utils/utils';
 
 /**
  * When the Code Editor is saved, the editor checks for errors and transpiles the code.
@@ -30,8 +30,8 @@ export const parseEditorOutput = (code: string) => {
   const trimmedCode = trimCode(code);
   try {
     return JSON5.parse(trimmedCode);
-  } catch (error: any) {
-    verbose('Error while parsing theme string', error.message);
+  } catch (error) {
+    verbose('Error while parsing theme string', getErrorMessage(error));
     throw error;
   }
 };

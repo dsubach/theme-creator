@@ -171,3 +171,8 @@ export const createPreviewMuiTheme = (
     deepmerge({ breakpoints: { values: spoofedBreakpoints[previewSize] } }, themeOptions),
   );
 };
+
+export const getErrorMessage = (error: unknown) => {
+  if (error instanceof Error) return error.message;
+  return String(error);
+};
