@@ -15,14 +15,14 @@ export const AddFontInput = () => {
     (event: FormEvent<HTMLFormElement>) => {
       event.preventDefault();
       event.persist();
-      const fontName: string = event.target.fontname.value;
+      const fontName: string = event.currentTarget.fontname.value;
       setLoading(true);
 
       dispatch(addFonts([fontName])).then((loaded) => {
         setLoading(false);
 
         if (loaded) {
-          event.target.fontname.value = '';
+          event.currentTarget.fontname.value = '';
         } else {
           setError(true);
         }
