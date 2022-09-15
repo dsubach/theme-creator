@@ -1,10 +1,10 @@
 import { ThemeOptions } from '@material-ui/core';
-import { setByPath, removeByPath, getByPath, verbose } from 'src/utils/utils';
+import { setByPath, removeByPath, getByPath, verbose, getErrorMessage } from 'src/utils/utils';
 import { defaultTheme, defaultThemeOptions } from 'src/siteTheme';
 import { AppThunkAction, NewSavedTheme, IThemeEditor, EditorStateOptions } from './types';
 import { canSave } from './selectors';
 import { updateTheme, addNewTheme, loadTheme, removeTheme, updateEditorState } from './reducers';
-
+import WebFont from 'webfontloader';
 import { useCallback } from 'react';
 import { parseEditorOutput } from '../utils/parser';
 import { useAppDispatch } from './hooks';
@@ -159,7 +159,7 @@ export const saveEditorToTheme = (code: string) => {
       errors: [
         {
           category: 1,
-          messageText: `Error while JSON5 parsing code: ${err.message}`,
+          messageText: `Error while JSON5 parsing code: ${getErrorMessage(err)}`,
         },
       ],
     });
