@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { createMuiTheme, Theme } from '@material-ui/core';
+import { Theme } from '@material-ui/core';
+import { createTheme } from '@material-ui/core/styles';
 import AddIcon from '@material-ui/icons/Add';
 import { IThemeThumbnailProps } from './types';
 import { useStyles } from './ThemeThumbnail.styles';
 
 export const ThemeThumbnail = ({ themeOptions, large = false }: IThemeThumbnailProps) => {
   const classes = useStyles();
-  const [themeObject, setThemeObject] = useState<Theme>({});
+  const [themeObject, setThemeObject] = useState<Theme>({} as Theme);
 
-  useEffect(() => setThemeObject(createMuiTheme(themeOptions)), [themeOptions]);
+  useEffect(() => setThemeObject(createTheme(themeOptions)), [themeOptions]);
 
   const { background, primary, secondary, text } = themeObject?.palette || {};
 
