@@ -13,6 +13,7 @@ import {
 import { green } from '@material-ui/core/colors';
 import CheckIcon from '@material-ui/icons/Check';
 import SaveIcon from '@material-ui/icons/Save';
+import { noop } from 'src/utils/utils';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -131,7 +132,7 @@ const LinearBuffer = () => {
   const [progress, setProgress] = useState(0);
   const [buffer, setBuffer] = useState(10);
 
-  const progressRef = useRef();
+  const progressRef = useRef(noop);
 
   useEffect(() => {
     progressRef.current = () => {
