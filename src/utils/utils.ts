@@ -176,3 +176,6 @@ export const getErrorMessage = (error: unknown) => {
   if (error instanceof Error) return error.message;
   return String(error);
 };
+
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+export const noop = () => {};
