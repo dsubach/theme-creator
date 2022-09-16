@@ -22,7 +22,7 @@ export const MainWindow = () => {
     <>
       <AppBar position="sticky" color="default" className={classes.navAppBar}>
         <Hidden lgUp>
-          <IconButton onClick={() => dispatch(toggleComponentNav())}>
+          <IconButton onClick={() => dispatch(toggleComponentNav(null))}>
             <MaterialUiIcon />
           </IconButton>
         </Hidden>
@@ -41,7 +41,7 @@ export const MainWindow = () => {
           <Tab label="Saved Themes" value="saved" id={savedThemesTabId} />
         </Tabs>
         <Hidden smUp>
-          <IconButton onClick={() => dispatch(toggleThemeConfig())}>
+          <IconButton onClick={() => dispatch(toggleThemeConfig(null))}>
             <BrushIcon />
           </IconButton>
         </Hidden>
