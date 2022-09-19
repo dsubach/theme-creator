@@ -27,7 +27,7 @@ export const useStyles = makeStyles((theme: Theme) =>
       marginBottom: theme.spacing(),
     },
     errorLine: {
-      fontWeight: theme.typography.fontWeightBold,
+      fontWeight: 900,
     },
     expandIcon: {
       transition: theme.transitions.create('transform'),
