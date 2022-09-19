@@ -1,6 +1,6 @@
 import { IPersistedState, EditorStateOptions } from './types';
 import { IThemeEditor } from 'src/state/types';
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme, Theme } from '@material-ui/core/styles';
 import {
   createPreviewMuiTheme,
   generateThemeId,
@@ -18,6 +18,7 @@ import {
   PayloadAction,
   Slice,
   SliceCaseReducers,
+  Draft,
 } from '@reduxjs/toolkit';
 import { REHYDRATE } from 'redux-persist';
 
@@ -88,7 +89,7 @@ const appSlice: Slice<IThemeEditor, SliceCaseReducers<IThemeEditor>, string> = c
     setTab(state, action: PayloadAction<string>) {
       state.activeTab = action.payload;
     },
-    addNewTheme(state, action: PayloadAction<IThemeEditor>) {
+    addNewTheme(_, action: PayloadAction<IThemeEditor>) {
       return action.payload;
     },
     updateTheme(_, action: PayloadAction<IThemeEditor>) {
@@ -128,17 +129,12 @@ const appSlice: Slice<IThemeEditor, SliceCaseReducers<IThemeEditor>, string> = c
             action.payload.themeOptions,
             state.previewSize,
           );
-          return {
-            ...state,
-            themeObject: { ...newThemeObject },
-            // themeObject: newThemeObject,
-            loadedFonts: loadFontsIfRequired(
-              action.payload.savedThemes[action.payload.themeId].fonts,
-              state.loadedFonts,
-            ),
-          };
+          state.themeObject = newThemeObject as Draft<Theme>;
+          state.loadedFonts = loadFontsIfRequired(
+            action.payload.savedThemes[action.payload.themeId].fonts,
+            state.loadedFonts,
+          );
         }
-        return state;
       });
   },
 });
