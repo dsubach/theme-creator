@@ -41,7 +41,12 @@ export const MaterialColorPicker = ({ color, onChangeComplete }: IMaterialColorP
     const decomposed = decomposeColor(color);
     switch (decomposed.type) {
       case 'rgba':
-        hexColor = rgbToHex(recomposeColor({ type: 'rgb', values: decomposed.values.slice(0, 3) }));
+        hexColor = rgbToHex(
+          recomposeColor({
+            type: 'rgb',
+            values: decomposed.values.slice(0, 3) as [number, number, number, number],
+          }),
+        );
         break;
       case 'rgb':
         hexColor = rgbToHex(color);
@@ -51,7 +56,7 @@ export const MaterialColorPicker = ({ color, onChangeComplete }: IMaterialColorP
           hslToRgb(
             recomposeColor({
               type: 'hsl',
-              values: decomposed.values.slice(0, 3),
+              values: decomposed.values.slice(0, 3) as [number, number, number, number],
             }),
           ),
         );
