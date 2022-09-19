@@ -17,7 +17,10 @@ import { IMaterialColorPickerProps } from './types';
 const muiColorByHex: Record<string, [string, string]> = {};
 for (let i = 0; i < muiHues.length; i++) {
   for (let j = 0; j < muiShades.length; j++) {
-    muiColorByHex[colors[muiHues[i]][muiShades[j]]] = [muiHues[i], muiShades[j]];
+    const color = colors[muiHues[i] as keyof typeof colors];
+    const hexValue = color[muiShades[j] as keyof typeof color];
+
+    muiColorByHex[hexValue] = [muiHues[i], muiShades[j]];
   }
 }
 
