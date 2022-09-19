@@ -80,43 +80,52 @@ export const MaterialColorPicker = ({ color, onChangeComplete }: IMaterialColorP
     <div>
       <div>
         <div className={classes.paletteContainer}>
-          {muiHues.map((c) => (
-            <Tooltip title={c} placement="top" key={c} TransitionComponent={Collapse} arrow>
-              <div
-                style={{
-                  height: hue === c ? '1.5em' : '1em',
-                  width: colorTypeWidth,
-                  backgroundColor: colors[c]['500'],
-                }}
-                className={classes.colorItem}
-                onClick={() => setHue(c)}
-              />
-            </Tooltip>
-          ))}
+          {muiHues.map((c) => {
+            const color = colors[c as keyof typeof colors];
+
+            return (
+              <Tooltip title={c} placement="top" key={c} TransitionComponent={Collapse} arrow>
+                <div
+                  style={{
+                    height: hue === c ? '1.5em' : '1em',
+                    width: colorTypeWidth,
+                    backgroundColor: color['500' as keyof typeof color],
+                  }}
+                  className={classes.colorItem}
+                  onClick={() => setHue(c)}
+                />
+              </Tooltip>
+            );
+          })}
         </div>
         <div className={classes.paletteContainer}>
-          {muiShades.map((s) => (
-            <Tooltip
-              title={s}
-              key={`${hue ?? 'red'}-${s}`}
-              placement="bottom"
-              TransitionComponent={Collapse}
-              arrow
-            >
-              <div
-                style={{
-                  height: shade === s ? '1.5em' : '1em',
-                  width: colorStrengthWidth,
-                  backgroundColor: colors[hue ?? 'red'][s],
-                }}
-                className={classes.colorItem}
-                onClick={() => {
-                  setShade(s);
-                  onChangeComplete(colors[hue ?? 'red'][s]);
-                }}
-              />
-            </Tooltip>
-          ))}
+          {muiShades.map((s) => {
+            const shadeColor =
+              colors[(hue as keyof typeof colors) ?? ('red' as keyof typeof colors)];
+
+            return (
+              <Tooltip
+                title={s}
+                key={`${hue ?? 'red'}-${s}`}
+                placement="bottom"
+                TransitionComponent={Collapse}
+                arrow
+              >
+                <div
+                  style={{
+                    height: shade === s ? '1.5em' : '1em',
+                    width: colorStrengthWidth,
+                    backgroundColor: shadeColor[s as keyof typeof shadeColor],
+                  }}
+                  className={classes.colorItem}
+                  onClick={() => {
+                    setShade(s);
+                    onChangeComplete(shadeColor[s as keyof typeof shadeColor]);
+                  }}
+                />
+              </Tooltip>
+            );
+          })}
         </div>
       </div>
     </div>
