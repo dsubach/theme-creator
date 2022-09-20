@@ -1,7 +1,8 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 /* eslint-disable */
-import muiComponentPropTypes from "./muiComponentPropTypes"
-import muiComponentOverrideTypes from "./muiComponentOverrideTypes"
+import muiComponentPropTypes from './muiComponentPropTypes';
+import muiComponentOverrideTypes from './muiComponentOverrideTypes';
 export const content = `
 import * as CSS from "cssTypes"
 ${muiComponentPropTypes}
@@ -377,4 +378,4 @@ export interface Theme {
 }
 
 export function createMuiTheme(options?: ThemeOptions, ...args: object[]): Theme;
-`
+`;

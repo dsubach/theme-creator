@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
 /* eslint-disable */
 export const content = `
@@ -37034,4 +37035,4 @@ type TimingFunction = CubicBezierTimingFunction | StepTimingFunction | "linear";
 type TrackBreadth<TLength> = TLength | "auto" | "max-content" | "min-content" | string;
 
 type ViewportLength<TLength> = TLength | "auto" | string;
-`
+`;
