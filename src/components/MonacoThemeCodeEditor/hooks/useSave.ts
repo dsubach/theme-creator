@@ -80,8 +80,10 @@ export const useSave = (editorRef: EditorRefType) => {
         errors,
       });
     } else {
-      dispatch(saveEditorToTheme(emittedOutput.outputFiles[0].text));
-      // update the saved version
+      if (emittedOutput != null) {
+        dispatch(saveEditorToTheme(emittedOutput.outputFiles[0].text));
+        // update the saved version
+      }
 
       updateEditorState({
         savedVersion: editorRef.current?.getModel()?.getAlternativeVersionId(),

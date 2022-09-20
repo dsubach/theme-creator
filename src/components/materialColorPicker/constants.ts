@@ -1,4 +1,4 @@
-export const muiHues = [
+export const muiHues: string[] = [
   'red',
   'pink',
   'purple',
@@ -20,7 +20,7 @@ export const muiHues = [
   'grey',
 ];
 
-export const muiShades = [
+export const muiShades: string[] = [
   '50',
   '100',
   '200',

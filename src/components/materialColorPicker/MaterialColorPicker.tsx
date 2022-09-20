@@ -17,7 +17,10 @@ import { IMaterialColorPickerProps } from './types';
 const muiColorByHex: Record<string, [string, string]> = {};
 for (let i = 0; i < muiHues.length; i++) {
   for (let j = 0; j < muiShades.length; j++) {
-    muiColorByHex[colors[muiHues[i]][muiShades[j]]] = [muiHues[i], muiShades[j]];
+    const color = colors[muiHues[i] as keyof typeof colors];
+    const hexValue = color[muiShades[j] as keyof typeof color];
+
+    muiColorByHex[hexValue] = [muiHues[i], muiShades[j]];
   }
 }
 
@@ -38,7 +41,12 @@ export const MaterialColorPicker = ({ color, onChangeComplete }: IMaterialColorP
     const decomposed = decomposeColor(color);
     switch (decomposed.type) {
       case 'rgba':
-        hexColor = rgbToHex(recomposeColor({ type: 'rgb', values: decomposed.values.slice(0, 3) }));
+        hexColor = rgbToHex(
+          recomposeColor({
+            type: 'rgb',
+            values: decomposed.values.slice(0, 3) as [number, number, number, number],
+          }),
+        );
         break;
       case 'rgb':
         hexColor = rgbToHex(color);
@@ -48,7 +56,7 @@ export const MaterialColorPicker = ({ color, onChangeComplete }: IMaterialColorP
           hslToRgb(
             recomposeColor({
               type: 'hsl',
-              values: decomposed.values.slice(0, 3),
+              values: decomposed.values.slice(0, 3) as [number, number, number, number],
             }),
           ),
         );
@@ -72,43 +80,52 @@ export const MaterialColorPicker = ({ color, onChangeComplete }: IMaterialColorP
     <div>
       <div>
         <div className={classes.paletteContainer}>
-          {muiHues.map((c) => (
-            <Tooltip title={c} placement="top" key={c} TransitionComponent={Collapse} arrow>
-              <div
-                style={{
-                  height: hue === c ? '1.5em' : '1em',
-                  width: colorTypeWidth,
-                  backgroundColor: colors[c]['500'],
-                }}
-                className={classes.colorItem}
-                onClick={() => setHue(c)}
-              />
-            </Tooltip>
-          ))}
+          {muiHues.map((c) => {
+            const color = colors[c as keyof typeof colors];
+
+            return (
+              <Tooltip title={c} placement="top" key={c} TransitionComponent={Collapse} arrow>
+                <div
+                  style={{
+                    height: hue === c ? '1.5em' : '1em',
+                    width: colorTypeWidth,
+                    backgroundColor: color['500' as keyof typeof color],
+                  }}
+                  className={classes.colorItem}
+                  onClick={() => setHue(c)}
+                />
+              </Tooltip>
+            );
+          })}
         </div>
         <div className={classes.paletteContainer}>
-          {muiShades.map((s) => (
-            <Tooltip
-              title={s}
-              key={`${hue ?? 'red'}-${s}`}
-              placement="bottom"
-              TransitionComponent={Collapse}
-              arrow
-            >
-              <div
-                style={{
-                  height: shade === s ? '1.5em' : '1em',
-                  width: colorStrengthWidth,
-                  backgroundColor: colors[hue ?? 'red'][s],
-                }}
-                className={classes.colorItem}
-                onClick={() => {
-                  setShade(s);
-                  onChangeComplete(colors[hue ?? 'red'][s]);
-                }}
-              />
-            </Tooltip>
-          ))}
+          {muiShades.map((s) => {
+            const shadeColor =
+              colors[(hue as keyof typeof colors) ?? ('red' as keyof typeof colors)];
+
+            return (
+              <Tooltip
+                title={s}
+                key={`${hue ?? 'red'}-${s}`}
+                placement="bottom"
+                TransitionComponent={Collapse}
+                arrow
+              >
+                <div
+                  style={{
+                    height: shade === s ? '1.5em' : '1em',
+                    width: colorStrengthWidth,
+                    backgroundColor: shadeColor[s as keyof typeof shadeColor],
+                  }}
+                  className={classes.colorItem}
+                  onClick={() => {
+                    setShade(s);
+                    onChangeComplete(shadeColor[s as keyof typeof shadeColor]);
+                  }}
+                />
+              </Tooltip>
+            );
+          })}
         </div>
       </div>
     </div>

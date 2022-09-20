@@ -20,7 +20,7 @@ export const ThemeWrapper = ({ children }: IThemeWrapperProps) => {
   );
 };
 
-const ThemeContainer = ({ children }: ThemeWrapperProps) => {
+const ThemeContainer = ({ children }: IThemeWrapperProps) => {
   const classes = useStyles();
   return (
     <Paper className={classes.themeContainer} elevation={0} square>

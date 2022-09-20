@@ -18,10 +18,11 @@ export const SavedThemeItem = ({
 }: ISavedThemeItemProps) => {
   const classes = useStyles();
   const loadedThemeId = useAppSelector((state) => state.themeId);
+  const loadedThemeOptions = useAppSelector((state) => state.themeOptions);
   const dispatch = useAppDispatch();
 
   const handleLoadTheme = useCallback(
-    (event: MouseEvent<HTMLDivElement>) => {
+    (event: MouseEvent<HTMLDivElement> | React.MouseEvent<HTMLButtonElement>) => {
       event.stopPropagation();
       dispatch(loadSavedTheme(themeId));
     },
@@ -35,7 +36,7 @@ export const SavedThemeItem = ({
           <Typography variant="subtitle1" align="center">
             {name}
           </Typography>
-          <ThemeThumbnail {...thumbnailProps} />
+          <ThemeThumbnail themeOptions={loadedThemeOptions} {...thumbnailProps} />
           <Typography variant="caption" component="p" align="center">{`Last Updated: ${moment(
             lastUpdated,
           ).fromNow()}`}</Typography>

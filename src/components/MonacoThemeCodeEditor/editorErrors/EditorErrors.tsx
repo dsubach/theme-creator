@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
+import * as monaco from 'monaco-editor';
 import { Snackbar, IconButton, Collapse, Divider } from '@material-ui/core';
 import Alert from '@material-ui/lab/Alert';
 import CloseIcon from '@material-ui/icons/Close';
@@ -31,14 +32,12 @@ export const EditorErrors = ({ editorRef }: IEditorErrorProps) => {
     }
   }, [errors]);
 
-  const getErrorString = (error: languages.typescript.Diagnostic) => {
+  const getErrorString = (error: monaco.languages.typescript.Diagnostic) => {
     if (!error.start) {
       return error.messageText;
     }
     const pos = model?.getPositionAt(error.start);
-    return `Line ${pos?.lineNumber}:${pos?.column}. ${
-      error.messageText?.messageText ?? error.messageText
-    }`;
+    return `Line ${pos?.lineNumber}:${pos?.column}. ${error.messageText}`;
   };
 
   const alertIcon = (

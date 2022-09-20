@@ -62,7 +62,7 @@ export const SnippetItem = ({ snippet }: ISnippetItemProps) => {
         <Typography variant="body2" className={classes.snippetTitle}>
           {title}
         </Typography>
-        {info && (
+        {info && toolTipContent && (
           <Tooltip title={toolTipContent} interactive arrow>
             <InfoOutlinedIcon />
           </Tooltip>

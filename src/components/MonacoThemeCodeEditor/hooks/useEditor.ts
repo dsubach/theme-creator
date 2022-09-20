@@ -46,7 +46,7 @@ export const useEditor = (editorRef: MutableEditorRefType) => {
       value: themeInput,
       // this will ensure the model is created only once
       model:
-        monaco.editor.getModel(monaco.Uri.parse('file:///main.tsx')) != null ||
+        monaco.editor.getModel(monaco.Uri.parse('file:///main.tsx')) ??
         monaco.editor.createModel(themeInput, 'typescript', monaco.Uri.parse('file:///main.tsx')),
     });
 

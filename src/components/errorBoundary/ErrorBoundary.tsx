@@ -73,7 +73,7 @@ export default withStyles({
 const ClearStorageButton = () => {
   const dispatch = useAppDispatch();
   const handleClick = useCallback(() => {
-    dispatch(resetSiteData());
+    dispatch(resetSiteData(null));
     location.reload();
   }, [dispatch]);
 

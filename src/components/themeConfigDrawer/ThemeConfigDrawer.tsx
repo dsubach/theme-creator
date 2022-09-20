@@ -26,7 +26,7 @@ const ThemeConfigDrawer = () => {
         paper: classes.drawerPaper,
       }}
       open={open}
-      onClose={() => dispatch(toggleThemeConfig())}
+      onClose={() => dispatch(toggleThemeConfig(null))}
     >
       <Grid container direction="column" wrap="nowrap" className={classes.drawerContainer}>
         <Grid item className={classes.editorWrapper}>

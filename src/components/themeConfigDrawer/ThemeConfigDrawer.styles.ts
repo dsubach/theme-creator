@@ -1,4 +1,4 @@
-import { CSSProperties } from 'React';
+import { CSSProperties } from 'react';
 import { makeStyles, Theme } from '@material-ui/core';
 
 const drawerWidth: CSSProperties['width'] = 400;

@@ -82,13 +82,13 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AppBarExample() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = useState<null | HTMLButtonElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLLIElement | HTMLButtonElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLButtonElement>(null);
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-  const handleProfileMenuOpen = (event: MouseEvent<HTMLButtonElement>) => {
+  const handleProfileMenuOpen = (event: MouseEvent<HTMLLIElement | HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
 
