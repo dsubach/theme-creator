@@ -1,13 +1,14 @@
 import { IPersistedState, EditorStateOptions } from './types';
-import { IThemeEditor } from 'src/state/types';
-import { createTheme, Theme } from '@material-ui/core/styles';
 import {
   createPreviewMuiTheme,
   generateThemeId,
   loadFontsIfRequired,
   stringify,
 } from 'src/utils/utils';
-import { loadFonts } from './actions';
+import { IThemeEditor } from 'src/state/types';
+import { createTheme, Theme } from '@material-ui/core/styles';
+
+import { loadFonts } from './stateUtils';
 
 import { defaultThemeOptions } from 'src/siteTheme';
 

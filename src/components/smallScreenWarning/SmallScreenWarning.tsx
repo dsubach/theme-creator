@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Hidden, Dialog, Typography, DialogContent, Slide, Button } from '@material-ui/core';
 import { TransitionProps } from '@material-ui/core/transitions/transition';
 import hereBeDragonsImage from 'src/images/herebedragons.webp';
-import { loadFonts } from 'src/state/actions';
+import { loadFonts } from 'src/state/stateUtils';
 import { useAppDispatch, useAppSelector } from 'src/state/hooks';
 import { showWarningScreen } from 'src/state/reducers';
 import { useStyles } from './SmallScreenWarning.styles';

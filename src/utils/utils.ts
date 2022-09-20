@@ -7,7 +7,7 @@ import { TypographyOptions } from '@material-ui/core/styles/createTypography';
 import { BreakpointValues } from '@material-ui/core/styles/createBreakpoints';
 import dotProp from 'dot-prop-immutable';
 import { IThemeEditor, PreviewSize } from '../state/types';
-import { loadFonts } from '../state/actions';
+import { loadFonts } from '../state/stateUtils';
 
 /**
  * Get an nested value from an object by a string path
