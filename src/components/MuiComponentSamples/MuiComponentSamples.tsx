@@ -13,7 +13,7 @@ export const MuiComponentSamples = () => {
       </Typography>
       {componentSamples.map(({ id, title, component, docs }) => (
         <div key={id} id={id}>
-          <Grid container justify="space-between" alignItems="center">
+          <Grid container justifyContent="space-between" alignItems="center">
             <Typography variant="h5" gutterBottom>
               {title}
             </Typography>

@@ -11,7 +11,7 @@ function LineHeightInput({ value, onChange }: IInputProps) {
 
   return (
     <>
-      <Grid container justify="space-between" alignItems="baseline">
+      <Grid container justifyContent="space-between" alignItems="baseline">
         <Grid item>
           <Typography variant="caption" color="textSecondary">
             Line Height:

@@ -30,7 +30,7 @@ export const TypographyInput = ({ variantPath, property }: ITypographyInput) => 
   const handleReset = useCallback(() => dispatch(removeThemeOption(path)), [dispatch]);
 
   return (
-    <Grid container justify="space-between" alignItems="baseline">
+    <Grid container justifyContent="space-between" alignItems="baseline">
       <Grid item className={classes.inputContainer}>
         <TypographyPropertyInput
           property={property}

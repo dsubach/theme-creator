@@ -14,7 +14,7 @@ export const SavedThemeList = () => {
   );
 
   return (
-    <Grid id={savedThemeListId} container wrap="wrap" justify="center">
+    <Grid id={savedThemeListId} container wrap="wrap" justifyContent="center">
       {sortedThemes.map((t) => (
         <Grid item key={`${t.name}-${t.id}`} className={classes.savedThemeContainer}>
           <SavedThemeItem

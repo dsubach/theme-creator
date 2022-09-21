@@ -20,7 +20,7 @@ export const PaletteInput = ({ label, path }: IPaletteInputPropss) => {
   const handleReset = useCallback(() => dispatch(removeThemeOption(path)), [dispatch]);
 
   return (
-    <Grid container justify="space-between" alignItems="flex-end">
+    <Grid container justifyContent="space-between" alignItems="flex-end">
       <Grid item>
         <ColorInput label={label} color={themeValueInfo.value} onColorChange={handleColorChange} />
       </Grid>

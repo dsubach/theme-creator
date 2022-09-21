@@ -861,7 +861,7 @@ export interface MuiComponentProps {
     /**
      * Defines the justify-content style property. It is applied for all screen sizes.
      */
-    justify?:
+    justifyContent?:
       | "flex-start"
       | "center"
       | "flex-end"

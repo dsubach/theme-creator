@@ -12,7 +12,7 @@ export const SavedThemes = () => {
 
   return (
     <div className={classes.savedThemesRoot}>
-      <Grid container justify="center">
+      <Grid container justifyContent="center">
         <Grid item>
           <Typography variant="h4">Current Theme</Typography>
           <CurrentTheme />
